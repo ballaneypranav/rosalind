@@ -23,13 +23,10 @@ def main():
 
         with open('random_input', 'r') as file:
             custom = subprocess.run(
-                ["python3.7", "lgis.py"], stdin=file, capture_output=True)
+                ["python3.7", "mmch.py"], stdin=file, capture_output=True)
             custom = str(custom.stdout, encoding="UTF8").strip()
 
-        with open('random_input', 'r') as file:
-            solution = subprocess.run(
-                ["python3.7", "solution.py"], stdin=file, capture_output=True)
-            solution = str(solution.stdout, encoding="UTF8").strip()
+        solution = MM(seq)
 
         match = check(custom, solution)
 
@@ -65,3 +62,19 @@ def check(custom, solution):
 
 if __name__ == "__main__":
     main()
+
+def MM(seq):
+    A = seq.count('A')
+    U = seq.count('U')
+    C = seq.count('C')
+    G = seq.count('G')
+    
+    if A > U:
+        MMAU = factorial(A)/factorial(A-U)
+    else:
+        MMAU = factorial(U)/factorial(U-A)
+    if C > G:
+        MMGC = factorial(C)/factorial(C-G)
+    else:
+        MMGC = factorial(G)/factorial(G-C)
+    return MMAU*MMGC
